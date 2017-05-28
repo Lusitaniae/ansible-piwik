@@ -3,7 +3,7 @@
     PIWIK_RELEASE_ID: "{{ [ansible_date_time.year, ansible_date_time.month, ansible_date_time.day, ansible_date_time.hour, ansible_date_time.minute, ansible_date_time.second] | join('') }}"
 
 - name: Download files
-  get_url: url={{ piwik_download_path }} dest={{ app_path }}/tmp/piwik.zip
+  get_url: url={{ piwik_download_path }} dest={{ app_path }}/tmp/piwik.zip checksum=sha256:{{ piwik_download_hash }}
 
 - name: Create release folder
   file:

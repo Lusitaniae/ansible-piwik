@@ -1,4 +1,7 @@
-piwik_download_path: http://builds.piwik.org/piwik.zip
+# Get the specified version zip artifact
+piwik_download_path: https://builds.piwik.org/piwik-3.0.4.zip
+# SHA256 hash for the artifact
+piwik_download_hash: c50798f08b7ad6bc7ae6f1dbb73787a54faca7356021a5b2419c4a19f3d7f7cd
 
 piwik_admin_user: piwik_admin
 piwik_admin_password: s3cR37p1w1k
