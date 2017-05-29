@@ -11,7 +11,7 @@
     owner: "{{ deploy_owner | default(app_user, true) }}"
     group: "{{ deploy_group | default(app_user, true) }}"
     state: directory
-  with_items: deploy_create_folders
+  with_items: "{{ deploy_create_folders }}"
 
 - name: Configure
   template:
