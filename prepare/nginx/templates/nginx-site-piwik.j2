@@ -36,7 +36,7 @@ server {
 
   # Relay all index.php requests to fastcgi.
   location ~* ^/(?:index|piwik)\.php$ {
-    fastcgi_pass unix:/var/run/php5-fpm.sock;
+    fastcgi_pass unix:/var/run/php7.1-fpm.sock;
     fastcgi_index index.php;
     fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     fastcgi_param REMOTE_ADDR $http_x_real_ip;
