@@ -15,6 +15,7 @@
     - 'php7.1-cli'
     - 'php7.1-mbstring'
     - 'php7.1-xml'
+    - 'php-redis'
 
 - name: Configure php-fpm php.ini
   template:

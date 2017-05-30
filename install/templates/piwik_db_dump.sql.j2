@@ -329,6 +329,7 @@ INSERT INTO `piwik_option` (`option_name`, `option_value`, `autoload`) VALUES
 ('version_Intl', '3.0.4', 1),
 ('version_LanguagesManager', '3.0.4', 1),
 ('version_Live', '3.0.4', 1),
+('version_QueuedTracking', '{{ piwik_queuedtracking_plugin_version }}', 1),
 ('version_Login', '3.0.4', 1),
 ('version_log_conversion.revenue', 'float default NULL', 1),
 ('version_log_conversion.revenue_discount', 'float default NULL', 1),
@@ -436,6 +437,23 @@ CREATE TABLE `piwik_plugin_setting` (
   `setting_value` longtext NOT NULL,
   `user_login` varchar(100) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+--
+-- Dumping data for table `piwik_plugin_setting`
+--
+
+INSERT INTO `piwik_plugin_setting` VALUES
+('QueuedTracking','useSentinelBackend','0',''),
+('QueuedTracking','sentinelMasterName','mymaster',''),
+('QueuedTracking','redisHost','{{ redis_host }}',''),
+('QueuedTracking','redisPort','6379',''),
+('QueuedTracking','redisDatabase','3',''),
+('QueuedTracking','redisPassword','',''),
+('QueuedTracking','queueEnabled','1',''),
+('QueuedTracking','numQueueWorkers','{{ queuedtracking_workers }}',''),
+('QueuedTracking','numRequestsToProcess','{{ queuedtracking_batch_size }}',''),
+('QueuedTracking','processDuringTrackingRequest','{{ queuedtracking_during_tracking_request }}','');
 
 -- --------------------------------------------------------
 

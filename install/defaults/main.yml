@@ -1,7 +1,19 @@
-# Get the specified version zip artifact
+# Piwik Artifact url, version and SHA256 hash
 piwik_download_path: https://builds.piwik.org/piwik-3.0.4.zip
-# SHA256 hash for the artifact
 piwik_download_hash: c50798f08b7ad6bc7ae6f1dbb73787a54faca7356021a5b2419c4a19f3d7f7cd
+
+# QueuedTracking plugin url, version and SHA256 hash
+piwik_queuedtracking_plugin_path: https://plugins.piwik.org/api/2.0/plugins/QueuedTracking/download/3.0.1
+piwik_queuedtracking_plugin_version: 3.0.1
+piwik_queuedtracking_plugin_hash: c6919c8923faff129967bcf0b8c8296fdbd22ca5da2ed6985cc4d07256e42fea
+
+# QueuedTracking settings
+# How many Workers active at once.
+queuedtracking_workers: 1
+# How many requests are batched inserted to the datase.
+queuedtracking_batch_size: 25
+# Insert is triggered by tracking request - else by cron job.
+queuedtracking_during_tracking_request: true
 
 piwik_admin_user: piwik_admin
 piwik_admin_password: s3cR37p1w1k
