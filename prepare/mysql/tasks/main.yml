@@ -12,4 +12,4 @@
 
 # Manage Piwik database user
 - name: "Manage Piwik db-user"
-  action: mysql_user name={{ mysql_piwik_user}} password={{ mysql_piwik_pass}} priv={{ mysql_piwik_db}}.*:ALL state=present login_user={{ mysql_admin_user }} login_password={{ mysql_admin_pass }} login_host={{ mysql_host }}
+  action: mysql_user name={{ mysql_piwik_user}} host=% password={{ mysql_piwik_pass}} priv={{ mysql_piwik_db}}.*:ALL state=present login_user={{ mysql_admin_user }} login_password={{ mysql_admin_pass }} login_host={{ mysql_host }}

@@ -27,7 +27,7 @@
   register: mysql_import_flag
 
 - name: Import MySQL dump
-  local_action: mysql_db login_user=root login_password={{ mysql_admin_pass }} login_host={{ mysql_host }} name={{ mysql_piwik_db }} state=import target="{{ deploy_path | default(app_path, true) }}/tmp/piwik_db_dump.sql"
+  mysql_db: login_user={{ mysql_admin_user }} login_password={{ mysql_admin_pass }} login_host={{ mysql_host }} name={{ mysql_piwik_db }} state=import target="{{ deploy_path | default(app_path, true) }}/tmp/piwik_db_dump.sql"
   register: mysql_imported
   when: not mysql_import_flag.stat.exists
 
