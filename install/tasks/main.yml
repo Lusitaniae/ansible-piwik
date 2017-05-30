@@ -15,8 +15,12 @@
     group: "{{ deploy_group | default(app_user, true) }}"
     state: directory
 
-- name: Extract archive
-  unarchive: src={{ app_path }}/tmp/piwik.zip dest={{ app_path }}/tmp
+- name: Extract Piwik build archive
+  unarchive:
+    src: "{{ app_path }}/tmp/piwik.zip"
+    dest: "{{ app_path }}/tmp"
+    remote_src: yes
+
 - name: Extract QueuedTracking plugin archive
   unarchive:
     src: "{{ app_path }}/tmp/queuedtracking.zip"
