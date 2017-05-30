@@ -2,8 +2,6 @@
 - name: "Install MySQL dependencies"
   apt: name={{ item }} update_cache=yes state=latest
   with_items:
-    - 'mysql-server'
-    - 'python-mysqldb' # Install MySQLdb Python package, mandatory to manage MySQL with ansible
 
 - name: "Start MySQL service"
   sudo: yes
@@ -17,6 +15,8 @@
 - name: "Change MySQL root password"
   action: shell mysqladmin -h {{ mysql_host }} -u {{ mysql_admin_user }} password {{ mysql_admin_pass }}
   when: mysql_emptypass|success
+    - python3-mysqldb
+    - mariadb-client-10.0
 
 # Manage Piwik database
 - name: "Manage Piwik db"
