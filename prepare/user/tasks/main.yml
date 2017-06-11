@@ -14,12 +14,6 @@
     groups: "{{ user_groups | join(',') }}"
     group: "{{ user_group | default((user_groups | default([user_name], true) | first), true) | default(app_user, true) }}"
 
-- name: SSH Authorized Key
-  authorized_key:
-    user: "{{ user_name | default(app_user, true) }}"
-    key: "{{ lookup('env','AUTHORIZED_KEY') | default(user_authorized_key, true) }}"
-  when: (not user_password) or (lookup('env','AUTHORIZED_KEY') != '') or user_authorized_key
-
 - name: Add default login directory for user
   lineinfile:
     dest: /home/deploy/.bashrc
