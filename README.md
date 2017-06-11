@@ -1,33 +1,43 @@
 # Ansible Role to install Piwik
 
-This repository provides an up and running role for your Ansible installation. Just clone this repository into the roles directory of your Ansible installation. 
+This role will install Piwik for a cloud environment.
+
+Install Ansible on its development version, for best python3 compatibility.
+
+
+Assumes you have an EC2 instance to install Piwik on.
+Assumes you have a RDS and Elastic Cache instances.
+Assumes you've created an SG allowing traffic from EC2 to the RDS and EC instances.
+Assumes you've created an SG allowing public traffic to EC2.
 
 ## Installation
 1. Clone this repository into your **roles** directory of your Ansible installation via:
 
    ```git clone https://github.com/hicknhack-software/ansible-piwik.git piwik```
-   
-   **Don't forget `piwik` after the clone command to ensure the installation into the piwik folder.**
-2. Generate a ssh key. And copy your public ssh key (id_rsa.pub) into the parent folder. Name your file *id_rsa.pub*.
-3. Add a hosts directory with your host file, e.g. `vagrant` with the following credentials and variables for an example installation on your Vagrant machine:
-    
+
+2. Download the ssh key that will be used for connections.
+3. Create a host file with the following details:
+
   ```
   [piwik]
-  localhost
-  
+  # Setup an Elastic IP and replace with your own.
+  # Make sure that the private key name matches.
+  80.80.80.80 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=my_private_key.pem
+
+
   [piwik:vars]
-  ansible_connection=local
-  
+ ansible_python_interpreter=/usr/bin/python3
+
   # change to your domain where piwik is hosted
-  piwik_webpage_url=localhost:8081
-  
+  piwik_webpage_url=stats.example.com
+
   # change to the name of the webpage you'd like to track
   # you can add another later in the dashboard of piwik
-  piwik_webpage_name=example-webpage 
-  
+  piwik_webpage_name=exammple.com
+
   # change to the domain or ip address of your piwik installation
-  piwik_trusted_host=localhost:8081
-  
+  piwik_trusted_host=stats.example.com
+
   [mysql:children]
   piwik
   ```
@@ -35,17 +45,40 @@ This repository provides an up and running role for your Ansible installation. J
 4. Add a folder named `group_vars` as sibling to `roles`. Add a file named `piwik.yml` with the following example content:
 
   ```
+  # Installation Details
   app_name: piwik
   app_user: deploy
-  app_path: /data/piwik
-  server_name: stats.example.org
-  
-  deploy_path: # {{ app_path }}
-  deploy_owner: # {{ app_user }}
-  deploy_group: # {{ app_user }}
-  ```
+  app_path: /var/www
 
-5. Add a Ansible playbook with the following example content:
+  # Piwik Host
+  server_name: stats.example.com
+  piwik_admin_user: maestro
+
+  # Remote Mysql
+  mysql_host: my-piwik-cluster-123456789.eu-west-1.rds.amazonaws.com
+  mysql_admin_user: maestro
+  mysql_piwik_user: piwik
+  mysql_piwik_db: piwik_db
+  mysql_service: mysql
+
+  # Remote Redis
+  redis_host: my-piwik-cluster-123456789.euw1.cache.amazonaws.com
+
+  ```
+5. Create an encrypted Ansible Vault with `ansible-vault edit group_vars/secrets.yml ` and add the credentials for your piwik setup, like the following example:
+
+    ```
+    # Piwik Credentials
+    # Generate a new hash with:
+    # php -r 'echo password_hash(md5("my-password"), PASSWORD_DEFAULT) . PHP_EOL;'
+    piwik_admin_password: $2y$10$Qcw6wAYjfVbHczecTQ7zVOmPb5c5NlLqhhgqnv0RO9iEu/gZILfnS
+
+    # Mysql root and user credentials
+    mysql_admin_pass: rEMcrn$Dg6Cs
+    mysql_piwik_pass: s3cR37p1w1k
+    ```
+
+6. Add an Ansible playbook with the following example content:
 
   ```
   - hosts: piwik
@@ -55,12 +88,12 @@ This repository provides an up and running role for your Ansible installation. J
       provisioned: yes
     roles:
       - role: piwik/prepare/user
-        user_authorized_key: "{{ lookup('file', 'id_rsa.pub') }}"
+        user_authorized_key: "{{ lookup('file', 'my_private_key.pub') }}"
       - piwik/prepare/environment
       - piwik/prepare/mysql
       - piwik/prepare/php
       - piwik/prepare/nginx
-  
+
   - hosts: piwik
     sudo: true
     sudo_user: "{{ app_user }}"
@@ -71,7 +104,7 @@ This repository provides an up and running role for your Ansible installation. J
       - role: piwik/install
   ```
 
-6. Run your installation and have fun.
+6. Start your installation with: `ansible-playbook site.yml --ask-vault-pass`
 
 ## License
 
