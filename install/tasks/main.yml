@@ -63,8 +63,6 @@
     src: "{{ app_path }}/releases/{{ PIWIK_RELEASE_ID }}"
     state: link
     force: yes
-  notify:
-    - restart nginx
 
 - name: Cleanup
   shell: "ls -dt {{ app_path }}/releases/* | egrep '[0-9]+' | tail -n +6 | xargs rm -rfv"

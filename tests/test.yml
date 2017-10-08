@@ -1,0 +1,82 @@
+---
+- hosts: all
+
+  vars:
+
+    # Piwik Host
+    server_name: localhost
+    
+    piwik_webpage_url: localhost
+    piwik_webpage_name: localhost
+    piwik_trusted_host: localhost
+
+    # Installation Details
+    app_name: piwik
+    app_user: deploy
+    app_path: /var/www
+
+    # Remote Mysql
+    mysql_host: "{{ lookup('env','MYSQL_PORT_3306_TCP_ADDR') }}"
+    mysql_admin_user: root
+    mysql_admin_pass: "000"
+    mysql_piwik_user: piwik
+    mysql_piwik_pass: s3cR37p1w1k
+    mysql_piwik_db: piwik_db
+    mysql_service: mysql
+
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+      changed_when: false
+
+    - name: Install dependencies.
+      package:
+        name:
+          - curl
+          - python3
+        state: present
+
+  roles:
+    - ../prepare/user
+    - ../prepare/environment
+    - ../prepare/mysql
+    - ../prepare/php
+    - ../prepare/nginx
+
+
+- hosts: all
+  sudo: true
+  sudo_user: "{{ app_user }}"
+  vars:
+    gather_facts: true
+    was_provisioned: "{{ provisioned is defined }}"
+    piwik_webpage_url: localhost
+    piwik_webpage_name: localhost
+    piwik_trusted_host: localhost
+
+    # Installation Details
+    app_name: piwik
+    app_user: deploy
+    app_path: /var/www
+
+    # Piwik Host
+    server_name: localhost
+    piwik_admin_user: maestro
+    piwik_admin_password: $2y$10$Qcw6wAYjfVbHczecTQ7zVOmPb5c5NlLqhhgqnv0RO9iEu/gZILfnS
+
+    # Remote Mysql
+    mysql_host: "{{ lookup('env','MYSQL_PORT_3306_TCP_ADDR') }}"
+    mysql_admin_user: root
+    mysql_admin_pass: "000"
+    mysql_piwik_user: piwik
+    mysql_piwik_pass: s3cR37p1w1k
+    mysql_piwik_db: piwik_db
+    mysql_service: mysql
+
+    # Remote Redis
+    redis_host: "{{ lookup('env','REDIS_PORT_6379_TCP_ADDR') }}"
+
+  roles:
+    - ../install

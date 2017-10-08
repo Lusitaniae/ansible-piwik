@@ -2,9 +2,14 @@
 - name: "Install MySQL dependencies"
   apt: name={{ item }} update_cache=yes state=latest
   with_items:
-
-    - python3-mysqldb
+    - python-dev
+    - libmysqlclient-dev
+    - python-pip
     - mariadb-client-10.0
+    - python-mysqldb
+
+- name: "Install Python mysql module"
+  pip: name=MySQL-python
 
 # Manage Piwik database
 - name: "Manage Piwik db"
