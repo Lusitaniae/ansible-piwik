@@ -18,6 +18,7 @@ queuedtracking_during_tracking_request: true
 piwik_admin_user: piwik_admin
 piwik_admin_password: s3cR37p1w1k
 piwik_admin_email: admin@example.org
+piwik_admin_token: c449fb552e7d39fe6ae22d8a02f30e1a
 
 mysql_host: 127.0.0.1
 mysql_admin_user: root

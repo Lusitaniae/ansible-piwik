@@ -72,6 +72,7 @@ Assumes you've created an SG allowing public traffic to EC2.
     # Generate a new hash with:
     # php -r 'echo password_hash(md5("my-password"), PASSWORD_DEFAULT) . PHP_EOL;'
     piwik_admin_password: $2y$10$Qcw6wAYjfVbHczecTQ7zVOmPb5c5NlLqhhgqnv0RO9iEu/gZILfnS
+    piwik_admin_token: c449fb552e7d39fe6ae22d8a02f30e1a
 
     # Mysql root and user credentials
     mysql_admin_pass: rEMcrn$Dg6Cs
