@@ -1,14 +1,23 @@
 # Ansible Role to install Piwik
 
+[![Build Status](https://travis-ci.org/Lusitaniae/ansible-piwik.svg?branch=master)](https://travis-ci.org/Lusitaniae/ansible-piwik)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Lusitaniae/ansible-piwik/master/LICENSE)
+
 This role will install Piwik for a cloud environment.
 
 Install Ansible on its development version, for best python3 compatibility.
 
 
-Assumes you have an EC2 instance to install Piwik on.
-Assumes you have a RDS and Elastic Cache instances.
-Assumes you've created an SG allowing traffic from EC2 to the RDS and EC instances.
-Assumes you've created an SG allowing public traffic to EC2.
+## Infrastructure:
+1. EC2 instance - instance to be installed Piwik.
+
+2. RDS instance - managed Mysql (or compatible) instance.
+
+3. Elastic Cache - managed Redis instance.
+
+Setup the appropriate Security Group so that EC and RDS are able to receive connections from EC2.
+
+You can use the finished EC2 instance to make an AMI and use it in a Auto Scaling group.
 
 ## Installation
 1. Clone this repository into your **roles** directory of your Ansible installation via:
