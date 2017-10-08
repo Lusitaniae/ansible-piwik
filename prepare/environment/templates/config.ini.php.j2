@@ -9,7 +9,7 @@ tables_prefix = "piwik_"
 charset = "utf8"
 
 [General]
-salt = "{{ mysql_piwik_salt }}"
+salt = "{{ piwik_salt }}"
 trusted_hosts[] = "{{ piwik_trusted_host }}"
 
 ; Fix for nginx proxys or similar:
@@ -66,4 +66,3 @@ PluginsInstalled[] = "ZenMode"
 PluginsInstalled[] = "LeftMenu"
 PluginsInstalled[] = "Morpheus"
 PluginsInstalled[] = "Contents"
-

@@ -5,4 +5,4 @@ deploy_create_folders:
 - /shared
 - /shared/config
 
-mysql_piwik_salt: dJvCKkxdRFyVUKeafTPiXvqwnD93JViS
+piwik_salt: "{{ 999999999999999999999 | random | string + (lookup('pipe', 'date +%s%N')) | to_uuid() }}"
